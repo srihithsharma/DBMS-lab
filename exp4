@@ -1,0 +1,71 @@
+
+SQL*Plus: Release 11.2.0.1.0 Production on Tue Aug 11 02:31:35 2026
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: A058@db2021
+Enter password:
+
+Connected to:
+Oracle Database 11g Release 11.2.0.1.0 - Production
+
+SQL> desc course2;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ COURSE_ID                                 NOT NULL NUMBER(10)
+ COURSE_NAME                               NOT NULL CHAR(20)
+
+SQL> desc student12;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REG_NO                                    NOT NULL VARCHAR2(5)
+ NAME                                      NOT NULL VARCHAR2(20)
+ COURSE_ID                                          NUMBER(5)
+ EMAIL                                              VARCHAR2(25)
+ GENDER                                             CHAR(2)
+ AGE                                                NUMBER(1)
+
+SQL> alter table student12 add constraint student_fk foreign key(corse
+  2
+SQL> alter table student12 add constraint student_fk foreign key(corse_id) references course2(course_id);
+alter table student12 add constraint student_fk foreign key(corse_id) references course2(course_id)
+                                                            *
+ERROR at line 1:
+ORA-00904: "CORSE_ID": invalid identifier
+
+
+SQL> alter table student12 add constraint student_fk foreign key(course_id) references course2(course_id);
+
+Table altered.
+
+SQL> alter table student12 add constraint student_un unique(email);
+
+Table altered.
+
+SQL> alter table student12 modify gender default 'f';
+
+Table altered.
+
+SQL> alter table student12 add constraint student_chk check(age>18 and age=18);
+
+Table altered.
+
+SQL> desc student12;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REG_NO                                    NOT NULL VARCHAR2(5)
+ NAME                                      NOT NULL VARCHAR2(20)
+ COURSE_ID                                          NUMBER(5)
+ EMAIL                                              VARCHAR2(25)
+ GENDER                                             CHAR(2)
+ AGE                                                NUMBER(1)
+
+SQL> desc student11;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REG_NO                                    NOT NULL VARCHAR2(5)
+ NAME                                      NOT NULL VARCHAR2(20)
+ COURSE_ID                                          NUMBER(5)
+ EMAIL                                              VARCHAR2(25)
+ GENDER                                             CHAR(1)
+ AGE                                                NUMBER(4)
