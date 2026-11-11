@@ -1,0 +1,254 @@
+SQL> drop table student;
+
+Table dropped.
+
+SQL> drop table course;
+
+Table dropped.
+
+SQL> create table course(
+  2    2  course_id number(10) Primary Key,
+  3    3  course_name varchar2(20),
+  4    4  course_enrolled_date date
+  5    5  );
+  2  course_id number(10) Primary Key,
+  *
+ERROR at line 2:
+ORA-00904: : invalid identifier 
+
+
+SQL> 
+SQL> create table course(
+  2  course_id number(10) Primary Key,
+  3  course_name varchar2(20),
+  4  course_enrolled_date date
+  5  );
+
+Table created.
+
+SQL> create table student(
+  2  student_id number(5)  Primary Key,
+  3  student_name varchar2(20) Not Null,
+  4  course_id number(10) References course(course_id),
+  5  student_age number(5) check (student_age>18));
+
+Table created.
+
+SQL> insert into course values(1,'aiml','02jan25');
+
+1 row created.
+
+SQL> insert into course values(2,'aids','03jan25');
+
+1 row created.
+
+SQL> insert into course values(3,'ai','04jan25');
+
+1 row created.
+
+SQL> insert into course values(3,'genai','05jan25');
+insert into course values(3,'genai','05jan25')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (A020.SYS_C0029327) violated 
+
+
+SQL> insert into course values(3,'datascience','05jan25');
+insert into course values(3,'datascience','05jan25')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (A020.SYS_C0029327) violated 
+
+
+SQL> insert into course values(4,'datascience','05jan25');
+
+1 row created.
+
+SQL> insert into course values(5,'cybersecurity','06jan25');
+
+1 row created.
+
+SQL> select * from course;
+
+ COURSE_ID COURSE_NAME          COURSE_EN                                       
+---------- -------------------- ---------                                       
+         1 aiml                 02-JAN-25                                       
+         2 aids                 03-JAN-25                                       
+         3 ai                   04-JAN-25                                       
+         4 datascience          05-JAN-25                                       
+         5 cybersecurity        06-JAN-25                                       
+
+SQL> insert into student values(1,'aishu',1,20);
+
+1 row created.
+
+SQL> insert into student values(2,'navatha',1,21);
+
+1 row created.
+
+SQL> insert into student values(3,'danny',1,19);
+
+1 row created.
+
+SQL> insert into student values(4,'bhavya',1,20);
+
+1 row created.
+
+SQL> insert into student values(5,'navya',1,20);
+
+1 row created.
+
+SQL> insert into student values(6,'kalpa',2,20);
+
+1 row created.
+
+SQL> insert into student values(7,'bhanu',5,20);
+
+1 row created.
+
+SQL> select * from student;
+
+STUDENT_ID STUDENT_NAME          COURSE_ID STUDENT_AGE                          
+---------- -------------------- ---------- -----------                          
+         1 aishu                         1          20                          
+         2 navatha                       1          21                          
+         3 danny                         1          19                          
+         4 bhavya                        1          20                          
+         5 navya                         1          20                          
+         6 kalpa                         2          20                          
+         7 bhanu                         5          20                          
+
+7 rows selected.
+
+SQL> select count(*) from student;
+
+  COUNT(*)                                                                      
+----------                                                                      
+         7                                                                      
+
+SQL> select count(*) from student group by course_id;
+
+  COUNT(*)                                                                      
+----------                                                                      
+         5                                                                      
+         1                                                                      
+         1                                                                      
+
+SQL> select count(*) from student where student_age=20 group by course_id;
+
+  COUNT(*)                                                                      
+----------                                                                      
+         3                                                                      
+         1                                                                      
+         1                                                                      
+
+SQL> select count(*) from student where student_age=20 and course group by course_id;
+select count(*) from student where student_age=20 and course group by course_id
+                                                             *
+ERROR at line 1:
+ORA-00920: invalid relational operator 
+
+
+SQL> select count(*) from student where student_age=20 and course_id=1 group by course_id;
+
+  COUNT(*)                                                                      
+----------                                                                      
+         3                                                                      
+
+SQL> select * from student where student_age=20 and course_id=1 group by course_id;
+select * from student where student_age=20 and course_id=1 group by course_id
+       *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression 
+
+
+SQL> select * from student where student_age=20 and course_id=1;
+
+STUDENT_ID STUDENT_NAME          COURSE_ID STUDENT_AGE                          
+---------- -------------------- ---------- -----------                          
+         1 aishu                         1          20                          
+         4 bhavya                        1          20                          
+         5 navya                         1          20                          
+
+SQL> select student
+  2  
+SQL> select student_id,student_name from student;
+
+STUDENT_ID STUDENT_NAME                                                         
+---------- --------------------                                                 
+         1 aishu                                                                
+         2 navatha                                                              
+         3 danny                                                                
+         4 bhavya                                                               
+         5 navya                                                                
+         6 kalpa                                                                
+         7 bhanu                                                                
+
+7 rows selected.
+
+SQL> select student_id,student_name from student order by student_name asc;
+
+STUDENT_ID STUDENT_NAME                                                         
+---------- --------------------                                                 
+         1 aishu                                                                
+         7 bhanu                                                                
+         4 bhavya                                                               
+         3 danny                                                                
+         6 kalpa                                                                
+         2 navatha                                                              
+         5 navya                                                                
+
+7 rows selected.
+
+SQL> select student_id,student_name from student where name like "n%";
+select student_id,student_name from student where name like "n%"
+                                                            *
+ERROR at line 1:
+ORA-00904: "n%": invalid identifier 
+
+
+SQL> select student_id,student_name from student where name likes "n%";
+select student_id,student_name from student where name likes "n%"
+                                                       *
+ERROR at line 1:
+ORA-00920: invalid relational operator 
+
+
+SQL> select student_id,student_name from student where student_name like "n%";
+select student_id,student_name from student where student_name like "n%"
+                                                                    *
+ERROR at line 1:
+ORA-00904: "n%": invalid identifier 
+
+
+SQL> select student_id,student_name from student where student_name likes "n%";
+select student_id,student_name from student where student_name likes "n%"
+                                                               *
+ERROR at line 1:
+ORA-00920: invalid relational operator 
+
+
+SQL> select student_id,student_name from student where student_name likes "n%";
+select student_id,student_name from student where student_name likes "n%"
+                                                               *
+ERROR at line 1:
+ORA-00920: invalid relational operator 
+
+
+SQL> select student_id,student_name from student where student_name like 'n%';
+
+STUDENT_ID STUDENT_NAME                                                         
+---------- --------------------                                                 
+         2 navatha                                                              
+         5 navya                                                                
+
+SQL> select student_id,student_name from student where student_name like '%a';
+
+STUDENT_ID STUDENT_NAME                                                         
+---------- --------------------                                                 
+         2 navatha                                                              
+         4 bhavya                                                               
+         5 navya                                                                
+         6 kalpa                                                                
+
+SQL> spool off
