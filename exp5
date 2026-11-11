@@ -1,0 +1,446 @@
+
+SQL*Plus: Release 11.2.0.1.0 Production on Tue Sep 8 14:29:09 2026
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: A058@db2021
+Enter password:
+
+Connected to:
+Oracle Database 11g Release 11.2.0.1.0 - Production
+
+SQL> create table student21(
+  2  student_id number(5) primary key,
+  3  student_name varchar2(30),
+  4  department varchar2(20),
+  5  marks number(3)
+  6  );
+
+Table created.
+
+SQL> insert into student21 values('&student_id','&student_name','&department','&marks');
+Enter value for student_id: 1
+Enter value for student_name: sita
+Enter value for department: cse
+Enter value for marks: 90
+old   1: insert into student21 values('&student_id','&student_name','&department','&marks')
+new   1: insert into student21 values('1','sita','cse','90')
+
+1 row created.
+
+SQL> /
+Enter value for student_id: 2
+Enter value for student_name: ram
+Enter value for department: ece
+Enter value for marks: 95
+old   1: insert into student21 values('&student_id','&student_name','&department','&marks')
+new   1: insert into student21 values('2','ram','ece','95')
+
+1 row created.
+
+SQL> /
+Enter value for student_id: 3
+Enter value for student_name: geeta
+Enter value for department: civil
+Enter value for marks: 75
+old   1: insert into student21 values('&student_id','&student_name','&department','&marks')
+new   1: insert into student21 values('3','geeta','civil','75')
+
+1 row created.
+
+SQL> /
+Enter value for student_id: 4
+Enter value for student_name: roja
+Enter value for department: IT
+Enter value for marks: 85
+old   1: insert into student21 values('&student_id','&student_name','&department','&marks')
+new   1: insert into student21 values('4','roja','IT','85')
+
+1 row created.
+
+SQL> /
+Enter value for student_id: 5
+Enter value for student_name: raju
+Enter value for department: mech
+Enter value for marks: 92
+old   1: insert into student21 values('&student_id','&student_name','&department','&marks')
+new   1: insert into student21 values('5','raju','mech','92')
+
+1 row created.
+
+SQL> select * from student21;
+
+STUDENT_ID STUDENT_NAME                   DEPARTMENT                MARKS
+---------- ------------------------------ -------------------- ----------
+         1 sita                           cse                          90
+         2 ram                            ece                          95
+         3 geeta                          civil                        75
+         4 roja                           IT                           85
+         5 raju                           mech                         92
+
+SQL> select count(*) as total_students from student;
+select count(*) as total_students from student
+                                       *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select count(*) as total_students from student21;
+
+TOTAL_STUDENTS
+--------------
+             5
+
+SQL> select sum(marks) as total_marks from student21;
+
+TOTAL_MARKS
+-----------
+        437
+
+SQL> select avg(marks) as average_marks from student21;
+
+AVERAGE_MARKS
+-------------
+         87.4
+
+SQL> select avg(marks) as total_marks from student21;
+
+TOTAL_MARKS
+-----------
+       87.4
+
+SQL> select min(marks) as total_marks from student21;
+
+TOTAL_MARKS
+-----------
+         75
+
+SQL> select min(marks) as min_marks from  student21;
+
+ MIN_MARKS
+----------
+        75
+
+SQL> select max(marks) as total_marks from student21;p
+  2  select max(marks) as total_marks from student21;
+select max(marks) as total_marks from student21;p
+                                               *
+ERROR at line 1:
+ORA-00911: invalid character
+
+
+SQL> select max(marks) as total_marks from student21;
+
+TOTAL_MARKS
+-----------
+         95
+
+SQL> select max(marks) as highest
+  2
+SQL>
+SQL> select max(marks) as highest_marks from student21;
+
+HIGHEST_MARKS
+-------------
+           95
+
+SQL> select department,avg(marks) as avg_marks from student21 group by department;
+
+DEPARTMENT            AVG_MARKS
+-------------------- ----------
+IT                           85
+cse                          90
+civil                        75
+ece                          95
+mech                         92
+
+SQL>
+SQL> /
+
+DEPARTMENT            AVG_MARKS
+-------------------- ----------
+IT                           85
+cse                          90
+civil                        75
+ece                          95
+mech                         92
+
+SQL> insert into student21 values('&student_id','&student_name','&department','&marks');
+Enter value for student_id: 6
+Enter value for student_name: rani
+Enter value for department: cse
+Enter value for marks: 80
+old   1: insert into student21 values('&student_id','&student_name','&department','&marks')
+new   1: insert into student21 values('6','rani','cse','80')
+
+1 row created.
+
+SQL> /
+Enter value for student_id: 7
+Enter value for student_name: deepa
+Enter value for department: ece
+Enter value for marks: 97
+old   1: insert into student21 values('&student_id','&student_name','&department','&marks')
+new   1: insert into student21 values('7','deepa','ece','97')
+
+1 row created.
+
+SQL> select * from student21;
+
+STUDENT_ID STUDENT_NAME                   DEPARTMENT                MARKS
+---------- ------------------------------ -------------------- ----------
+         1 sita                           cse                          90
+         2 ram                            ece                          95
+         3 geeta                          civil                        75
+         4 roja                           IT                           85
+         5 raju                           mech                         92
+         6 rani                           cse                          80
+         7 deepa                          ece                          97
+
+7 rows selected.
+
+SQL> select department,avg(marks) as avg_marks from student21 group by department;
+
+DEPARTMENT            AVG_MARKS
+-------------------- ----------
+IT                           85
+cse                          85
+civil                        75
+ece                          96
+mech                         92
+
+SQL> select department,avg(marks) as avg_marks from student21;
+select department,avg(marks) as avg_marks from student21
+       *
+ERROR at line 1:
+ORA-00937: not a single-group group function
+
+
+SQL> select department,avg(marks0 as total_words from student21;
+select department,avg(marks0 as total_words from student21
+                             *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> select department,avg(marks) as avg_marks from student21 group by department;
+
+DEPARTMENT            AVG_MARKS
+-------------------- ----------
+IT                           85
+cse                          85
+civil                        75
+ece                          96
+mech                         92
+
+SQL> select department,avg(marks) as total_marks from student21 group by department;
+
+DEPARTMENT           TOTAL_MARKS
+-------------------- -----------
+IT                            85
+cse                           85
+civil                         75
+ece                           96
+mech                          92
+
+SQL> select department,count(marks) as count_student from student21 group by department;
+
+DEPARTMENT           COUNT_STUDENT
+-------------------- -------------
+IT                               1
+cse                              2
+civil                            1
+ece                              2
+mech                             1
+
+SQL> select department,max(marks) as max_marks from student21 group by department;
+
+DEPARTMENT            MAX_MARKS
+-------------------- ----------
+IT                           85
+cse                          90
+civil                        75
+ece                          97
+mech                         92
+
+SQL> select department,avg(marks) as avg_marks from student21 group by department having avg(marks) > 85;
+
+DEPARTMENT            AVG_MARKS
+-------------------- ----------
+ece                          96
+mech                         92
+
+SQL> select department,count(*) as total_students from student21 group by department having count(*)>1;
+
+DEPARTMENT           TOTAL_STUDENTS
+-------------------- --------------
+cse                               2
+ece                               2
+
+SQL> select department,count(*) as no_of_students,avg(marks) as avg_marks,max(marks) as max_marks) from student21 group by department having avg(marks)>80;
+select department,count(*) as no_of_students,avg(marks) as avg_marks,max(marks) as max_marks) from student21 group by department having avg(marks)>80
+                                                                                            *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> select department,count(*) as no_of_students,avg(marks) as avg_marks,max(marks) as max_marks from student21 group by department having avg(marks)>80;
+
+DEPARTMENT           NO_OF_STUDENTS  AVG_MARKS  MAX_MARKS
+-------------------- -------------- ---------- ----------
+IT                                1         85         85
+cse                               2         85         90
+ece                               2         96         97
+mech                              1         92         92
+
+SQL> select * from student21;
+
+STUDENT_ID STUDENT_NAME                   DEPARTMENT                MARKS
+---------- ------------------------------ -------------------- ----------
+         1 sita                           cse                          90
+         2 ram                            ece                          95
+         3 geeta                          civil                        75
+         4 roja                           IT                           85
+         5 raju                           mech                         92
+         6 rani                           cse                          80
+         7 deepa                          ece                          97
+
+7 rows selected.
+
+SQL> create table employee10{
+  2  emp_id number(5) primary key,
+  3  emp_name varchar2(30),
+  4  salary number(8)
+  5  );
+create table employee10{
+                       *
+ERROR at line 1:
+ORA-00922: missing or invalid option
+
+
+SQL> create table employee10(
+  2  emp_id number(5) primary key,
+  3  emp_name varchar2(30),
+  4  salary number(8)
+  5  );
+
+Table created.
+
+SQL> insert into employee10 values(101,'arun',100000);
+
+1 row created.
+
+SQL> insert into employee10 values(102,'nani',50000);
+
+1 row created.
+
+SQL> grant select on employee10 to scott;
+
+Grant succeeded.
+
+SQL> grant select,insert,update on employee to scott;
+
+Grant succeeded.
+
+SQL> revoke insert on employee from scott;
+
+Revoke succeeded.
+
+SQL> insert into employee10 values(103,'nikhil',200000);
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> insert into employee10 values(104,'chinna',105000);
+
+1 row created.
+
+SQL> savepoint sp1;
+
+Savepoint created.
+
+SQL> insert into employee10 values(105,'kishore',100000);
+
+1 row created.
+
+SQL> rollback to sp1;
+
+Rollback complete.
+
+SQL> select * from employee10;
+
+    EMP_ID EMP_NAME                           SALARY
+---------- ------------------------------ ----------
+       101 arun                               100000
+       102 nani                                50000
+       103 nikhil                             200000
+       104 chinna                             105000
+
+SQL> grant select on employee10 to user_name;
+grant select on employee10 to user_name
+                              *
+ERROR at line 1:
+ORA-01917: user or role 'USER_NAME' does not exist
+
+
+SQL> create table alumni(
+  2  student_name varchar(30)
+  3  );
+
+Table created.
+
+SQL> insert into alumni values('sita');
+
+1 row created.
+
+SQL> insert into alumni values('ram');
+
+1 row created.
+
+SQL> insert into alumni values('geeta');
+
+1 row created.
+
+SQL> select * from student21 where department in ('cse','IT');
+
+STUDENT_ID STUDENT_NAME                   DEPARTMENT                MARKS
+---------- ------------------------------ -------------------- ----------
+         1 sita                           cse                          90
+         4 roja                           IT                           85
+         6 rani                           cse                          80
+
+SQL> select * from student21 where student_id in(1,2);
+
+STUDENT_ID STUDENT_NAME                   DEPARTMENT                MARKS
+---------- ------------------------------ -------------------- ----------
+         1 sita                           cse                          90
+         2 ram                            ece                          95
+
+SQL> select * from student21 where marks > any (
+  2  select marks from student where department = 'ece' );
+select marks from student where department = 'ece' )
+                  *
+ERROR at line 2:
+ORA-00942: table or view does not exist
+
+
+SQL> select * from student21 where marks > any (
+  2  select marks from student21 where department = 'ece' );
+
+STUDENT_ID STUDENT_NAME                   DEPARTMENT                MARKS
+---------- ------------------------------ -------------------- ----------
+         7 deepa                          ece                          97
+
+SQL> select * from student21 where marks > any (select marks from student21 where department='cse');
+
+STUDENT_ID STUDENT_NAME                   DEPARTMENT                MARKS
+---------- ------------------------------ -------------------- ----------
+         7 deepa                          ece                          97
+         2 ram                            ece                          95
+         5 raju                           mech                         92
+         1 sita                           cse                          90
+         4 roja                           IT                           85
+SQL>
